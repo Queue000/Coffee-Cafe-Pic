@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCP's Menu</title>
+
+    <style>
+        /* styles.css */
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 5px;
+            padding: 0;
+            min-height: 100vh;
+            /* Ensure the body takes the full height of the viewport */
+            position: relative;
+            overflow-y: auto;
+            /* Make scrollable scrollbars */
+        }
+        
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Add vh for a size of background */
+            background-image: url('https://wallpaperaccess.com/full/1184035.jpg');
+            background-size: cover;
+            /* Ensure the image covers the entire background */
+            background-position: center;
+            /* Center the image */
+            background-repeat: no-repeat;
+            /* Prevent the image from repeating */
+            /* filter: blur(2px); */
+            /* Apply blur effect */
+            z-index: -1;
+            /* Ensure the background is behind other content */
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+            /* Ensure the content is above the background padding: 20px; */
+            background-color: none;
+            /* Optional: Add a translucent background to the content */
+        }
+        /* .left {
+            margin-right: 450px;
+            
+        } */
+        /* This for some text which are shining in the middle of text box*/
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #ffcc00;
+            /* Gold color for contrast */
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            /* Adds depth */
+        }
+        
+        p {
+            color: aliceblue;
+            margin-top: 0;
+            margin-left: 360px;
+        }
+        
+        main {
+            margin: 25px;
+        }
+        
+        ul.menu {
+            list-style-type: none;
+            padding: 0px;
+        }
+        
+        ul.menu li {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.63);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+            /* Smooth hover effect */
+            text-align: center;
+            /* Make all text in center */
+        }
+        
+        ul.menu li a {
+            transition-duration: 0.4s;
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            font-style: oblique;
+            display: block;
+            text-align: center;
+        }
+        
+        ul.menu li:hover {
+            transform: scale(1.05);
+            /* Slightly enlarge on hover */
+            background-color: rgba(255, 201, 100, 0.708);
+            /* Change background on hover */
+        }
+        /* This is for inside decoration */
+        
+        ul.menu li a.button {
+            text-decoration: none;
+            color: rgb(255, 255, 255);
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 20px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, rgba(255, 123, 0, 1) 0%, rgba(255, 200, 100, 1) 100%);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        ul.menu li a.button:hover {
+            background: linear-gradient(90deg, rgba(255, 123, 0, 1) 0%, rgba(255, 200, 100, 1) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.854);
+        }
+        
+        ul.menu li a.button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        ul.menu li .price,
+        ul.menu li .Keemat {
+            font-size: 18px;
+            font-weight: lighter;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.368);
+            padding: 2px 10px;
+            border-radius: 5px;
+            margin-left: 10px;
+            /* Standardized margin */
+        }
+        /* This for Extra Cheese or Normal */
+        
+        .text-container {
+            color: aliceblue;
+            display: inline-block;
+            padding: 6px;
+            margin-bottom: -10px;
+        }
+        /* For normal and extra cheese */
+        
+        .text-right {
+            margin-left: 9px;
+        }
+        
+        .text-left {
+            margin-left: 150px;
+        }
+        /* Dropdown Menu */
+        
+        .dropdown-menu {
+            display: none;
+            /* Ensure the menu is hidden initially */
+            margin-top: 10px;
+            padding: 10px;
+            background-color: none;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.947);
+        }
+        
+        .dropdown-menu ul {
+            list-style-type: none;
+            padding: 10px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+        
+        .dropdown-menu li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-menu li a {
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .dropdown-menu li a:hover {
+            color: #ff7e5f;
+        }
+        /* A handy button to scroll back to the top of the page. */
+        
+        .back-to-top {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background-color: #ff7e5f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            background-color: #feb47b;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="background"></div>
+    <div class="content">
+        <header>
+            <h1>Cafe Coffee Pic Menu</h1>
+        </header>
+        <main>
+            <ul class="menu">
+
+                <!-- Tea Menu will display when you Click on it -->
+                <li onclick="toggleMenu('teaMenu')">Tea's</li>
+                <div class="dropdown-menu" id="teaMenu">
+                    <ul>
+                        <li><a href="#item1" id="Regular Tea" class="button">Regular Tea...<span class="price">10 Rs.</span></a></li>
+                        <li><a href="#item2" id="Black Tea" class="button">Black Tea...<span class="price">15 Rs.</span></a></li>
+                        <li><a href="#item3" id="Lemon Honey Tea" class="button">Lemon Honey Tea...<span class="price">20 Rs.</span></a></li>
+                    </ul>
+                </div>
+
+
+                <li onclick="toggleMenu('iceTeaMenu')">Iced Tea</li>
+                <div class="dropdown-menu" id="iceTeaMenu">
+                    <ul>
+                        <li><a href="#item1" class="button">Peach Ice Tea...<span class="price">60 Rs.</span></a></li>
+                        <li><a href="#item2" class="button">Lime Ice Tea...<span class="price">60 Rs.</span></a></li>
+                    </ul>
+                </div>
+                <!-- <li><a href="#Item ">Iced Tea</a></li> -->
+
+                <li onclick="toggleMenu('breadMenu')">Bread's</li>
+                <div class="dropdown-menu" id="breadMenu">
+                    <ul>
+                        <li><a href="#item1" class="button">Bun Maska...<span class="price">25 Rs.</span></a></li>
+                        <li><a href="#item2" class="button">Jam Bun Maska...<span class="price">30 Rs.</span></a></li>
+                        <li><a href="#item3" class="button">Bread Butter...<span class="price">30 Rs.</span></a></li>
+                        <li><a href="#item3" class="button">Chocolate Bun Maska...<span class="price">40 Rs.</span></a></li>
+                    </ul>
+                </div>
+
+                <li onclick="toggleMenu('eggMenu')">Egg Special</li>
+                <div class="dropdown-menu" id="eggMenu">
+                    <ul>
+                        <li><a href="#item1" class="button">Cheese Omelet...<span class="price">50 Rs.</span></a></li>
+                        <li><a href="#item2" class="button">Omelet Bell Paper...<span class="price">60 Rs.</span></a></li>
+                        <li><a href="#item3" class="button">Masala Omelet...<span class="price">60 Rs.</span></a></li>
+                        <li><a href="#item4" class="button">Half Fry...<span class="price">60 Rs</span></a></li>
+                        <li><a href="#item5" class="button">Egg Main Aur Egg Tu<span class="price">70 Rs</span></a></li>
+                    </ul>
+                </div>
+                <!-- <li><a href="#Item ">Egg Special</a></li> -->
+
+
+                <li onclick="toggleMenu('chickenMenu')">Chicken Special</li>
+                <div class="dropdown-menu" id="chickenMenu">
+                    <ul>
+                        <li><a href="#item1" id="Cheese Pizza" class="button">Chicken Omelet...<span class="price">70 Rs.</span></a></li>
+                        <li><a href="#item2" class="button">Chicken Egg White Omelet...<span class="price">70 Rs.</span></a></li>
+                        <li><a href="#item3" class="button">Chicken Kheema Bread...<span class="price">80 Rs.</span></a></li>
+                        <li><a href="#item4" class="button">Cheese Chicken Kheema Bread...<span class="price">85 Rs</span></a></li>
+                    </ul>
+                </div>
+                <!-- <li><a href="#Item ">Chicken Special</a></li> -->
+
+
+                <li onclick="toggleMenu('mocktailMenu')">Mocktail's</li>
+                <div class="dropdown-menu" id="mocktailMenu">
+                    <ul>
+                        <li><a href="#item1" id="Cheese Pizza" class="button">Virgin Mojito...<span class="price">59 Rs.</span></a></li>
+                        <li><a href="#item2" class="button">Blue Lagoon...<span class="price">69 Rs.</span></a></li>
+                        <li><a href="#item3" class="button">Kiwi Mocktail...<span class="price">69 Rs.</span></a></li>
+                        <li><a href="#item4" class="button">Virgin Masala Margarita...<span class="price">69 Rs</span></a></li>
+                        <li><a href="#item5" class="button">Orange Mojito...<span class="price">69 Rs</span></a></li>
+                        <li><a href="#item6" class="button">Virgin Pina-Colada...<span class="price">79 Rs</span></a></li>
+                        <li><a href="#item6" class="button">Rainbow Mocktail...<span class="price">89 Rs</span></a></li>
+                    </ul>
+                </div>
+                <!-- <li><a href="#Item ">Mocktail's</a></li> -->
+
+
+
+                <li onclick="toggleMenu('toastMenu')">Bread Toast</li>
+                <div class="dropdown-menu" id="toastMenu">
+
+                    <div class="text-container">
+                        <span class="text-left">Normal</span>
+                        <span class="text-right">ADDON</span>
+                    </div>
+                    <ul>
+                        <li><a href="#item1" class="button">Garlic Cheese Bread...<span class="Keemat">60 Rs.</span><span class="price"> 70 Rs.</span></a></li>
+                        <li><a href="#item2" class="button">Peri Peri Garlic Cheese Bread...<span class="price">70 Rs.</span><span class="price"> 80 Rs.</span></a></li>
+                    </ul>
+                </div>
+                <!-- <li><a href="#Item ">CCP Bread Toast</a></li> -->
+
+
+                <li><a href="Waffle's.html" class="left">Waffle</a></li>
+
+
+
+                <li><a href="Coffee.html" class="left">Coffee</a></li>
+
+
+
+
+                <li><a href="Sandwiche's" class="left">Sandwich</a></li>
+
+                <li><a href="Burger.html" class="left">Burger</a></li>
+
+                <li><a href="Pizza.html" class="left">Pizza</a></li>
+
+                <li><a href="Fries.html" class="left">Fries</a></li>
+
+                <li><a href="Maggies.html" class="left">Maggie</a></li>
+
+            </ul>
+        </main>
+    </div>
+
+    <!-- A handy button to scroll back to the top of the page. -->
+    <button onclick="scrollToTop()" class="back-to-top" id="backToTopBtn">↑</button>
+
+    <script>
+        function toggleMenu(menuId) {
+            var dropdowns = document.getElementsByClassName('dropdown-menu');
+            var menu = document.getElementById(menuId);
+
+            // Close all dropdowns first
+            for (var i = 0; i < dropdowns.length; i++) {
+                if (dropdowns[i] !== menu) {
+                    dropdowns[i].style.display = 'none';
+                }
+            }
+
+            // Toggle the clicked dropdown
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        // Close the dropdown menu if the user clicks outside of it 
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu > li')) {
+                var dropdowns = document.getElementsByClassName('dropdown-menu');
+                for (var i = 0; i < dropdowns.length; i++) {
+                    dropdowns[i].style.display = 'none';
+                }
+            }
+        }
+
+        // A handy button to scroll back to the top of the page.
+        window.onscroll = function() {
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopBtn.style.display = 'block';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        };
+
+        function scrollToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+</body>
+
+</html>

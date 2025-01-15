@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee</title>
+
+    <style>
+        /* styles.css */
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            /* Ensure the body takes the full height of the viewport */
+            position: relative;
+            overflow-y: auto;
+            /* Make scrollable scrollbars */
+        }
+        
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://wallpaperaccess.com/full/1184035.jpg');
+            background-size: cover;
+            /* Ensure the image covers the entire background */
+            filter: blur(2px);
+            background-position: center;
+            /* Center the image */
+            background-repeat: no-repeat;
+            /* Prevent the image from repeating */
+            /* filter: blur(2px); */
+            /* Apply blur effect */
+            z-index: -1;
+            /* Ensure the background is behind other content */
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+            /* Ensure the content is above the background padding: 20px; */
+            background-color: none;
+            /* Optional: Add a translucent background to the content */
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #ffcc00;
+            /* Gold color for contrast */
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            /* Adds depth */
+        }
+        
+        main {
+            margin: 20px;
+        }
+        
+        ul.menu {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        ul.menu li {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.63);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+            /* Smooth hover effect */
+            text-align: center;
+        }
+        
+        ul.menu li a {
+            transition-duration: 0.4s;
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            font-style: oblique;
+            display: block;
+            /* text-align: center; */
+        }
+        
+        ul.menu li:hover {
+            transform: scale(1.05);
+            /* Slightly enlarge on hover */
+            background-color: rgba(255, 201, 100, 0.626);
+            /* Change background on hover */
+        }
+        
+        ul.menu li a.button {
+            text-decoration: none;
+            color: rgb(255, 255, 255);
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 20px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, rgba(255, 123, 0, 1) 0%, rgba(255, 200, 100, 1) 100%);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        ul.menu li a.button:hover {
+            background: linear-gradient(90deg, rgba(255, 123, 0, 1) 0%, rgba(255, 200, 100, 1) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        ul.menu li a.button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        ul.menu li .price,
+        ul.menu li .Keemat {
+            font-size: 18px;
+            font-weight: lighter;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.317);
+            padding: 2px 10px;
+            border-radius: 5px;
+            margin-left: 10px;
+            /* Standardized margin */
+        }
+        
+        .text-container {
+            color: aliceblue;
+            display: inline-block;
+            padding: 6px;
+            margin-bottom: -10px;
+        }
+        /* For normal and extra cheese */
+        
+        .text-right {
+            margin-left: 20px;
+        }
+        
+        .text-left {
+            margin-left: 170px;
+        }
+        /* Dropdown Menu */
+        
+        .dropdown-menu {
+            /* display: none; */
+            /* Ensure the menu is hidden initially */
+            margin-top: 10px;
+            padding: 10px;
+            background-color: none;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.947);
+        }
+        
+        .dropdown-menu ul {
+            list-style-type: none;
+            padding: 10px;
+        }
+        
+        .dropdown-menu li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s ease;
+        }
+        
+        .dropdown-menu li:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-menu li a {
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .dropdown-menu li a:hover {
+            color: #ff7e5f;
+        }
+        /* A handy button to scroll back to the top of the page. */
+        
+        .back-to-top {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background-color: #ff7e5f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            background-color: #feb47b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+    <div class="content">
+        <header>
+            <h1>Coffee...</h1>
+        </header>
+
+        <main>
+            <ul class="menu">
+
+                <li onclick="toggleMenu('Hot-Coffee-Menu')">Hot Coffee Beverages</li>
+                <div class="dropdown-menu" id="Hot-Coffee-Menu">
+                    <ul>
+                        <li><a href="#item1" class="button">Filter Coffee...<span class="price">20 Rs.</span></a></li>
+                    </ul>
+                </div>
+
+                <li onclick="toggleMenu('Cold-Coffee-Menu')">Espresso Thick Cold Coffee</li>
+                <div class="dropdown-menu" id="Cold-Coffee-Menu">
+
+                    <div class="text-container">
+                        <span class="text-left">Normal</span>
+                        <span class="text-right">Coffee Pic</span>
+                    </div>
+                    <ul>
+                        <li><a href="#item1" class="button">Thick Cold Coffee...<span class="Keemat">30 Rs.</span><span class="price">50 Rs.</span></a></li>
+                        <li><a href="#item2" class="button">Chocolate Flavoured Cold Coffee...<span class="Keemat">40 Rs.</span><span class="price">60 Rs.</span></a></li>
+                        <li><a href="#item3" class="button">Chocolate Crush Cold Coffee...<span class="Keemat">50 Rs.</span><span class="price">60 Rs.</span></a></li>
+                        <li><a href="#item4" class="button">Cold Coffee with Vanilla Ice-Cream<span class="Keemat">60 Rs.</span><span class="price">75 Rs.</span></a></li>
+                        <li><a href="#item4" class="button">Cold Coffee with Chocolate Ice-Cream<span class="Keemat">60 Rs.</span><span class="price">75 Rs.</span></a></li>
+                        <li><a href="#item4" class="button">Cold Coffee with Butter Scotch Ice-Cream<span class="Keemat">60 Rs.</span><span class="price">75 Rs.</span></a></li>
+                    </ul>
+                </div>
+
+
+
+            </ul>
+        </main>
+    </div>
+
+    <!-- A handy button to scroll back to the top of the page. -->
+    <button onclick="scrollToTop()" class="back-to-top" id="backToTopBtn">↑</button>
+
+    <script>
+        function toggleMenu(menuId) {
+            var dropdowns = document.getElementsByClassName('dropdown-menu');
+            var menu = document.getElementById(menuId);
+
+            // Close all dropdowns first
+            for (var i = 0; i < dropdowns.length; i++) {
+                if (dropdowns[i] !== menu) {
+                    dropdowns[i].style.display = 'none';
+                }
+            }
+
+            // Toggle the clicked dropdown
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        // Close the dropdown menu if the user clicks outside of it 
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu > li')) {
+                var dropdowns = document.getElementsByClassName('dropdown-menu');
+                for (var i = 0; i < dropdowns.length; i++) {
+                    dropdowns[i].style.display = 'none';
+                }
+            }
+        }
+
+        // A handy button to scroll back to the top of the page.
+        window.onscroll = function() {
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopBtn.style.display = 'block';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        };
+
+        function scrollToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+
+</body>
+
+</html>
